@@ -155,7 +155,8 @@
    }).then((result) => {
       if (result.isConfirmed) {
          $.ajax({
-            url: "/khut-bd-admin/public/product/delete/" + productId,
+           // url: "/khut-bd-admin/public/product/delete/" + productId,
+           url: "/product/delete/" + productId,
             type: "DELETE",
             data: {
                _token: "{{ csrf_token() }}"
