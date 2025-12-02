@@ -72,6 +72,8 @@ Route::get('/admin-logout', [AdminLoginController::class, 'logout'])->name('admi
 Route::post('/onlogin', [\App\Http\Controllers\AdminLoginController::class, 'login']);
 
 
+
+
 //home section route
 Route::get('/', [HomeController::class, 'homeIndex'])->middleware(LoginCheckMiddleware::class);
 Route::get('/admin/dashboard', [HomeController::class, 'homeIndex'])->name('admin.dashboard')->middleware(LoginCheckMiddleware::class);

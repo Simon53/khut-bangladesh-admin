@@ -889,7 +889,8 @@ function appendImageToPreview(previewContainer, hiddenInput, imageUrl) {
     let relativePath = 'gallery/' + fileName; // DB-এ save হবে শুধু এটা
 
     // 2️⃣ preview জন্য full path
-    let previewPath = '/khut-bd-admin/public/storage/' + relativePath;
+    //let previewPath = '/khut-bd-admin/public/storage/' + relativePath;
+    let previewPath = '/storage/' + relativePath;
 
     // 3️⃣ Dropdown options
     let colorOptions = '<option value="">Select Color</option>';
@@ -963,7 +964,8 @@ function appendImageToPreview(previewContainer, hiddenInput, imageUrl) {
     const imgSrc = $(this).attr('data-location'); 
     let fixedPath = imgSrc;
     if (!/^https?:\/\//i.test(imgSrc)) {
-        fixedPath = '/khut-bd-admin/public/storage' + (imgSrc.startsWith('/') ? '' : '/') + imgSrc;
+        //fixedPath = '/khut-bd-admin/public/storage' + (imgSrc.startsWith('/') ? '' : '/') + imgSrc;
+        fixedPath = '/storage' + (imgSrc.startsWith('/') ? '' : '/') + imgSrc;
     }
 
     if (selectedTarget === '#mainImage') {
@@ -1252,7 +1254,8 @@ $('#useSelectedImages, #confirmGallerySelection').on('click', function () {
     
     $.ajax({
          type: "POST",
-         url: "/khut-bd-admin/public/product/store",
+         //url: "/khut-bd-admin/public/product/store",
+         url: "/product/store",
          contentType: "application/json; charset=utf-8",
          dataType: "json",
          headers: {

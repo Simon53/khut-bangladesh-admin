@@ -32,83 +32,85 @@
 @section('script')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+
     <script type="text/javascript">
-     /*  $('.loginForm').on('submit', function(event){
-        event.preventDefault();
-        // read by name attributes: userName and passWord in your form
-        let userName = $('input[name="userName"]').val();
-        let passWord = $('input[name="passWord"]').val();
-
-        // send plain password to server (server will md5() it)
-        let url = "/khut-bd-admin/public/onlogin";
-        axios.post(url, {
-            user: userName,
-            pass: passWord
-        }).then(function(response){
-            if(response.status == 200 && response.data == 1){
-                toastr.success("Login Success");
-                window.location.href = '/khut-bd-admin/public/';
-            } else {
-                toastr.error("Login failed");
-            }
-        }).catch(function(error){
-            toastr.error("Login failed");
-        });
-    });
-
-  
-    $(document).ready(function () {
-        toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "timeOut": "3000"
-        };
-    });*/
-    
-    
-    
-   $(document).ready(function(){
-
-    // Toastr options
-    toastr.options = {
-        "closeButton": true,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "timeOut": "3000"
-    };
-
-    // Base path (adjust according to your server folder structure)
-    const basePath = '/khut-bd-admin/public';
-
-    // Login form submit
-    $('.loginForm').on('submit', function(event){
-        event.preventDefault();
-
-        let userName = $('input[name="userName"]').val();
-        let passWord = $('input[name="passWord"]').val();
-
-        // POST login request
-        axios.post(`${basePath}/onlogin`, {
-            user: userName,
-            pass: passWord
+        $('.loginForm').on('submit', function(event){
+            event.preventDefault()
+            let formData = $(this).serializeArray();
+            let userName = formData[0]['value'];
+            let passWord = formData[1]['value'];
+            let hashedPass = md5(passWord);
+            //alert(userName+passWord);
+            let url ="/onlogin";
+            axios.post(url,{
+                user:userName,
+                pass:passWord
+            }).then(function(response){
+                if(response.status == 200 && response.data ==1){
+                    toastr.error("Login Success");
+                    window.location.href='/';
+                }else{
+                    toastr.error("Login faile");
+                }
+            }).catch(function(error){
+                 toastr.error("Login faile");
+            })
         })
-        .then(function(response){
-            if(response.status === 200 && response.data == 1){
-                toastr.success("Login Success");
 
-                // redirect to dashboard/home page
-                window.location.href = `${basePath}/`;
-            } else {
-                toastr.error("Login failed");
-            }
-        })
-        .catch(function(error){
-            console.error(error); // optional for debugging
-            toastr.error("Server error: " + (error.response?.data?.message || error.message));
+        //toastr Function
+        $(document).ready(function () {
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "3000"
+            };
         });
-    });
-
-});
     </script>
+
+
+    <!--script type="text/javascript">
+    //for server code
+        $(document).ready(function(){
+            // Toastr options
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "3000"
+            };
+
+            // Base path (adjust according to your server folder structure)
+            //const basePath = '/khut-bd-admin/public';
+            const basePath = '/';
+            // Login form submit
+            $('.loginForm').on('submit', function(event){
+                event.preventDefault();
+
+                let userName = $('input[name="userName"]').val();
+                let passWord = $('input[name="passWord"]').val();
+
+                // POST login request
+                axios.post(`${basePath}/onlogin`, {
+                    user: userName,
+                    pass: passWord
+                })
+                .then(function(response){
+                    if(response.status === 200 && response.data == 1){
+                        toastr.success("Login Success");
+
+                        // redirect to dashboard/home page
+                        window.location.href = `${basePath}/`;
+                    } else {
+                        toastr.error("Login failed");
+                    }
+                })
+                .catch(function(error){
+                    console.error(error); // optional for debugging
+                    toastr.error("Server error: " + (error.response?.data?.message || error.message));
+                });
+            });
+
+        });
+    </script-->
 @endsection
